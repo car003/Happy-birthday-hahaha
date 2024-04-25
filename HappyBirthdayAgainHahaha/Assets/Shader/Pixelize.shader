@@ -2,7 +2,7 @@ Shader "Hidden/Pixelize"
 {
     Properties
     {
-        __MainTex("Texture", 2D) = "white"
+        _MainTex("Texture", 2D) = "white"
     }
     SubShader
     {
@@ -70,3 +70,6 @@ Shader "Hidden/Pixelize"
         }
     }
 }
+
+
+

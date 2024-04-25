@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Toon shader
+  m_Name: Shader Graphs_Jewellery
   m_Shader: {fileID: -6465566751694194690, guid: 7c86b341994c5944ca4da150af549da6,
     type: 3}
   m_ValidKeywords: []
@@ -39,13 +39,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Max: 1.16
-    - _Min: 2.77
+    - _Max: 1.17
+    - _Min: 3.21
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Shades: 0.49
+    - _Shades: -0.26
     m_Colors:
-    - _Color: {r: 0.20412956, g: 0.8867924, b: 0.8676986, a: 0}
+    - _Color: {r: 0.114578135, g: 0.38679248, b: 0.37897024, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4678093375362521760
 MonoBehaviour:

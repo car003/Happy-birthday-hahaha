@@ -21,7 +21,7 @@ Shader "Hidden/Pixelize"
         {
             float4 positionOS : POSITION;
             float2 uv : TEXCOORD0;
-        };
+        }; 
 
         struct Varyings
         {

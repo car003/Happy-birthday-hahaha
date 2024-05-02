@@ -9,7 +9,7 @@ public class PixelizeFeature : ScriptableRendererFeature
     // specific screen height to calculate the pixelated resolution
     [System.Serializable]
    public class CustomPassSettings 
-    {
+    { 
         public RenderPassEvent renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
         public int screenHeigh = 144;
     }

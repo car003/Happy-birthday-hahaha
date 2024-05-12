@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pixel Toon shader_Star
+  m_Name: Pixel Toon shader_Marble
   m_Shader: {fileID: -6465566751694194690, guid: 1908b18e500d60345aeaf61e460bf79e,
     type: 3}
   m_ValidKeywords: []
@@ -52,11 +52,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fresnel_Power: 0.67
-    - _Fresnel_Threshold: 0.29
+    - _Fresnel_Power: 3.48
+    - _Fresnel_Threshold: 0.27
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Dark_Color: {r: 0.8301887, g: 0.11294643, b: 0, a: 0}
-    - _Lit_Color: {r: 1, g: 0.76310354, b: 0.043137252, a: 0}
+    - _Dark_Color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 0}
+    - _Lit_Color: {r: 1, g: 0.9058786, b: 0.50377357, a: 0}
   m_BuildTextureStacks: []

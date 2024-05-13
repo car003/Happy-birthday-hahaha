@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
+    public bool switchToVerticalMove; 
     float moveSpeed = 7f; 
     public float walkSpeed = 7f;
     public float sprintSpeed = 12f;
@@ -16,10 +17,20 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown = 0.25f;
     public float airMultiplier = 0.4f;
     bool readyToJump;
+    bool doubleJump;
+
+    [Header("Dash")]
+    TrailRenderer tr;
+    bool canDash = true;
+    bool isDashing;
+    float dashingPower = 50f;
+    float dashingTime = 0.2f;
+    float dashingCD = 1f;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode dashKey = KeyCode.J;
 
     [Header("Ground Check")]
     [SerializeField] float playerHeight = 2f;
@@ -53,12 +64,17 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         //rb.freezeRotation = true;
         orientation = GetComponent<Transform>();
+        tr = GetComponent<TrailRenderer>();
 
         readyToJump = true;
     }
 
     private void Update()
     {
+        //Disable other actions at dashing
+        if (isDashing)
+            return;
+
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f);
 
@@ -83,14 +99,27 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         //verticalInput = Input.GetAxisRaw("Vertical");
 
-        // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+
+        //on ground and reset doublejump
+        if (grounded && !Input.GetKey(jumpKey))
         {
-            readyToJump = false;
+            doubleJump = false;
+        }
+        // when to jump
+        if (Input.GetKeyDown(jumpKey) && (/*readyToJump &&*/ grounded|| doubleJump))
+        {
+            //readyToJump = false;
 
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+
+        //dash
+        if (Input.GetKeyDown(dashKey) && canDash)
+        {
+            StartCoroutine(Dash());
         }
     }
 
@@ -120,7 +149,10 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         // calculate movement direction
-        moveDirection = orientation.forward * 0 + orientation.right * horizontalInput;
+        if (!switchToVerticalMove)
+            moveDirection = orientation.forward * 0 + orientation.right * horizontalInput;
+        else
+            moveDirection = orientation.forward * horizontalInput + orientation.right * 0;
 
         // on slope
         if (OnSlope() && !exitingSlope)
@@ -174,12 +206,33 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, 0);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+
+        doubleJump = !doubleJump;
     }
     private void ResetJump()
     {
-        readyToJump = true;
+        //readyToJump = true;
 
         exitingSlope = false;
+    }
+
+    IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        rb.useGravity = false;
+        rb.velocity = new Vector3(rb.velocity.x * dashingPower, 0f, 0);
+        tr.emitting = true;
+
+        yield return new WaitForSeconds(dashingTime);
+        isDashing = false;
+        rb.useGravity = true;
+        tr.emitting = false;
+
+
+        yield return new WaitForSeconds(dashingCD);
+        canDash = true;
+
     }
 
     private bool OnSlope()
